@@ -1,0 +1,319 @@
+/* Configurações Globais */
+body {
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* Identidade Visual Grupo Matos */
+.bg-gradient-matos {
+    background: linear-gradient(135deg, #713898 0%, #d63768 50%, #f1a95b 100%);
+}
+
+.text-matos { 
+    color: #d63768 !important; 
+}
+
+.bg-matos { 
+    background-color: #d63768 !important; 
+    color: white; 
+    border: none; 
+}
+
+.border-matos-subtle { 
+    border-color: rgba(214, 55, 104, 0.3) !important; 
+}
+
+/* Botões Customizados */
+.btn-matos {
+    background-color: #d63768;
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-matos:hover {
+    background-color: #b52c56;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(214, 55, 104, 0.3);
+}
+
+.btn-outline-matos {
+    border: 2px solid #d63768;
+    color: #d63768;
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-matos:hover {
+    background-color: #d63768;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.hover-matos:hover {
+    color: #d63768 !important;
+    border-color: #d63768 !important;
+    background-color: #fff !important;
+}
+
+/* Navegação (Tabs) */
+.nav-link { 
+    color: rgba(255, 255, 255, 0.7); 
+    font-weight: 500; 
+    border-bottom: 2px solid transparent; 
+}
+
+.nav-link:hover { 
+    color: white; 
+}
+
+.nav-link.active { 
+    color: white !important; 
+    font-weight: bold; 
+    border-bottom: 2px solid white; 
+}
+
+/* Componentes Comuns e Efeitos nos Cards */
+.admin-only { 
+    transition: opacity 0.3s ease; 
+}
+
+.card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 15px;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Suavidade nos Inputs */
+.form-control:focus, .form-select:focus {
+    border-color: #d63768;
+    box-shadow: 0 0 0 0.25rem rgba(214, 55, 104, 0.25);
+}
+
+/* ================================== */
+/* CARROSSEL E IMAGENS DE DESTAQUE    */
+/* ================================== */
+.carousel-inner {
+    background-color: #1a1e21; 
+}
+
+.hero-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(0.85);
+}
+
+.backdrop-blur {
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.tracking-wide { 
+    letter-spacing: 2px; 
+}
+
+/* Ações nas listas e Carrossel */
+.delete-banner-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: rgba(220, 53, 69, 0.85);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.delete-banner-btn:hover {
+    background: #dc3545;
+    transform: scale(1.1);
+}
+
+.notification-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.list-group-item {
+    position: relative;
+}
+
+/* Scrollbar Customizada para o Sino de Notificações */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #c1c1c1; 
+    border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8; 
+}
+
+/* Item de Notificação do Sino */
+.bell-notif-item {
+    transition: background 0.2s;
+    border-left: 3px solid transparent;
+}
+.bell-notif-item.unread {
+    background-color: #f8f9fa;
+    border-left: 3px solid #d63768;
+}
+.bell-notif-item:hover {
+    background-color: #f1f5f9;
+}
+
+/* ================================== */
+/* ESTILOS DO CHAT INTERNO            */
+/* ================================== */
+.chat-container-row { 
+    height: 75vh; 
+}
+
+.bg-chat { 
+    background-color: #e5ddd5; 
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%23d63768' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E"); 
+}
+
+.chat-group-item {
+    transition: all 0.2s ease;
+    border-left: 4px solid transparent;
+    cursor: pointer;
+}
+
+.chat-group-item.active {
+    background: linear-gradient(135deg, #713898 0%, #d63768 100%) !important;
+    color: white !important;
+    border-left: 4px solid #f1a95b !important;
+    font-weight: 600;
+}
+
+.chat-group-item.active i, 
+.chat-group-item.active .text-muted {
+    color: white !important;
+}
+
+.chat-group-item:hover:not(.active) {
+    background-color: #fceef2;
+}
+
+.msg-bubble { 
+    max-width: 85%; 
+    padding: 10px 15px; 
+    border-radius: 15px; 
+    position: relative; 
+    margin-bottom: 5px; 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
+}
+
+.msg-received { 
+    background-color: white; 
+    border-bottom-left-radius: 0; 
+    align-self: flex-start; 
+}
+
+.msg-sent { 
+    background-color: #dcf8c6; 
+    border-bottom-right-radius: 0; 
+    align-self: flex-end; 
+}
+
+.msg-sender { 
+    font-size: 0.75rem; 
+    font-weight: bold; 
+    color: #713898; 
+    margin-bottom: 2px; 
+}
+
+.msg-time { 
+    font-size: 0.65rem; 
+    color: #999; 
+    text-align: right; 
+    margin-top: 5px; 
+}
+
+/* ================================== */
+/* ANIMAÇÕES                          */
+/* ================================== */
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-down {
+    animation: slideDown 0.4s ease forwards;
+}
+
+@keyframes fadeIn { 
+    from { opacity: 0; } 
+    to { opacity: 1; } 
+}
+
+.animate-fade-in { 
+    animation: fadeIn 0.3s ease; 
+}
+
+/* ================================== */
+/* RESPONSIVIDADE (MOBILE)            */
+/* ================================== */
+@media (max-width: 768px) {
+    .w-sm-100 { 
+        width: 100% !important; 
+        margin-bottom: 0.5rem; 
+    }
+    
+    .chat-container-row { 
+        height: calc(100vh - 120px) !important; 
+        flex-direction: column; 
+    }
+    
+    .chat-sidebar { 
+        height: 35%; 
+        overflow-y: auto; 
+        border-right: none !important; 
+        border-bottom: 1px solid #dee2e6; 
+    }
+    
+    .chat-main { 
+        height: 65%; 
+    }
+    
+    .hero-img { 
+        height: 250px; 
+    }
+    
+    .carousel-caption { 
+        width: 90% !important; 
+        padding: 10px !important; 
+        bottom: 10px;
+    }
+    
+    .carousel-caption h3 { 
+        font-size: 1.2rem; 
+    }
+    
+    .carousel-caption p { 
+        font-size: 0.8rem; 
+        margin-bottom: 0; 
+    }
+}

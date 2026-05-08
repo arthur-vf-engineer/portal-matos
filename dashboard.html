@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Comunicação - Grupo Matos</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/Home/dashboard.css">
+</head>
+<body class="d-flex flex-column vh-100">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-matos shadow-sm sticky-top flex-shrink-0">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand fw-bold tracking-wide" href="#">GRUPO MATOS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active tab-link" href="#" data-target="view-dashboard"><i class="bi bi-house-door me-1"></i> Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link tab-link" href="#" data-target="view-chat"><i class="bi bi-chat-dots me-1"></i> Comunicação</a>
+                    </li>
+                    <li class="nav-item admin-only">
+                        <a class="nav-link tab-link" href="#" data-target="view-users"><i class="bi bi-people me-1"></i> Gestão de Usuários</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center text-white mt-3 mt-lg-0">
+                    <div class="dropdown me-3">
+                        <a class="text-white text-decoration-none position-relative d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" id="bellDropdownToggle" data-bs-auto-close="outside">
+                            <i class="bi bi-bell-fill fs-5"></i>
+                            <span id="bellBadge" class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle d-none"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-3 p-0" style="width: 320px; overflow: hidden;">
+                            <div class="p-3 border-bottom d-flex justify-content-between align-items-center bg-light">
+                                <h6 class="mb-0 fw-bold small text-uppercase text-muted">Histórico de Alertas</h6>
+                                <button class="btn btn-sm btn-link text-danger text-decoration-none p-0 small fw-bold" onclick="clearBellNotifications()">Limpar</button>
+                            </div>
+                            <div id="bellNotificationsList" class="overflow-auto custom-scrollbar" style="max-height: 300px;">
+                                <div class="text-center p-4 text-muted small">Nenhuma notificação recente.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dropdown w-100">
+                        <a class="text-white text-decoration-none dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                            <img src="https://ui-avatars.com/api/?name=Admin&background=fff&color=d63768" id="userAvatar" class="rounded-circle me-2" width="35" height="35">
+                            <span class="small fw-medium" id="userNameDisplay">Carregando...</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                            <li><h6 class="dropdown-header">Simular Acesso:</h6></li>
+                            <li><a class="dropdown-item text-danger" href="/Login/index.html"><i class="bi bi-box-arrow-right me-2"></i>Sair</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow-1 overflow-hidden position-relative">
+        <div class="container-fluid h-100 py-4 px-lg-5 overflow-auto custom-scrollbar">
+
+            <div id="view-dashboard" class="view-section active">
+                <div class="news-admin-only d-flex flex-wrap gap-2 justify-content-lg-end justify-content-center align-items-center mb-4">
+                    <button class="btn btn-outline-warning text-dark fw-bold rounded-pill px-3 shadow-sm border-2 w-sm-100" onclick="openNotificationModal()">
+                        <i class="bi bi-lightning-charge me-2"></i>Nova Notificação
+                    </button>
+                    <button class="btn btn-outline-matos fw-bold rounded-pill px-3 shadow-sm w-sm-100" data-bs-toggle="modal" data-bs-target="#newCarouselModal">
+                        <i class="bi bi-image me-2"></i>Novo Destaque
+                    </button>
+                    <button class="btn btn-matos fw-bold rounded-pill px-3 shadow-sm w-sm-100" data-bs-toggle="modal" data-bs-target="#newPostModal">
+                        <i class="bi bi-plus-circle me-2"></i>Novo Informativo
+                    </button>
+                </div>
+
+                <div id="heroCarousel" class="carousel slide mb-5 rounded-4 overflow-hidden shadow flex-shrink-0" data-bs-ride="carousel">
+                    <div class="carousel-indicators" id="carouselIndicators"></div>
+                    <div class="carousel-inner" id="carouselInner"></div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <h5 class="fw-bold text-dark border-bottom pb-2 mb-4"><i class="bi bi-newspaper me-2 text-matos"></i>Últimos Informativos</h5>
+                        <div id="newsFeed"></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <h5 class="fw-bold text-dark border-bottom pb-2 mb-4"><i class="bi bi-lightning-charge me-2 text-warning"></i>Notificações Rápidas</h5>
+                        <div class="bg-white rounded-3 shadow-sm p-0 overflow-hidden mb-4 border border-light">
+                            <ul class="list-group list-group-flush" id="notificationsList"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-chat" class="view-section d-none h-100">
+                <div class="row g-0 bg-white rounded-4 shadow-sm overflow-hidden border border-light chat-container-row h-100">
+                    <div class="col-md-4 col-lg-3 border-end d-flex flex-column bg-light chat-sidebar h-100">
+                        <div class="p-3 border-bottom d-flex justify-content-between align-items-center bg-white flex-shrink-0">
+                            <h6 class="fw-bold mb-0">Canais</h6>
+                            <div class="d-flex gap-1">
+                                <button class="btn btn-sm btn-outline-matos rounded-circle" onclick="openNewDirectModal()" title="Nova Conversa Individual"><i class="bi bi-person-plus"></i></button>
+                                <button class="btn btn-sm btn-matos chat-admin-only rounded-circle" onclick="openNewGroupModal()" title="Novo Grupo"><i class="bi bi-people"></i></button>
+                            </div>
+                        </div>
+                        <div class="list-group list-group-flush flex-grow-1 overflow-auto custom-scrollbar" id="chatGroupsList"></div>
+                    </div>
+                    
+                    <div class="col-md-8 col-lg-9 d-flex flex-column position-relative chat-main h-100">
+                        <div class="p-3 border-bottom bg-white d-flex justify-content-between align-items-center flex-shrink-0">
+                            <h5 class="fw-bold mb-0" id="currentChatTitle">Selecione um grupo</h5>
+                            <div>
+                                <button class="btn btn-sm btn-outline-primary chat-admin-only d-none me-1" id="btnEditCurrentGroup" title="Editar Grupo"><i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-sm btn-outline-danger chat-admin-only d-none" id="btnDeleteCurrentGroup" title="Excluir Grupo"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                        
+                        <div class="flex-grow-1 p-3 overflow-auto chat-messages-container bg-chat custom-scrollbar" id="chatMessages">
+                            <div class="text-center text-muted mt-5">Inicie a comunicação corporativa do Grupo Matos.</div>
+                        </div>
+                        
+                        <div class="p-3 bg-white border-top flex-shrink-0">
+                            <form id="formSendMessage" class="d-flex gap-2 align-items-center">
+                                <input type="file" id="chatImageInput" accept="image/*" class="d-none">
+                                <button type="button" class="btn btn-light rounded-circle text-muted" id="btnAttachImage" disabled>
+                                    <i class="bi bi-image"></i>
+                                </button>
+                                <input type="text" class="form-control rounded-pill bg-light" id="chatInputMessage" placeholder="Digite sua mensagem..." autocomplete="off" disabled>
+                                <button type="submit" class="btn btn-matos rounded-pill px-4" id="btnSendMessage" disabled><i class="bi bi-send-fill"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-users" class="view-section d-none">
+                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-4 gap-3">
+                    <h4 class="fw-bold mb-0"><i class="bi bi-people-fill text-matos me-2"></i>Controle de Acessos</h4>
+                    <button class="btn btn-matos fw-bold rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#newUserModal">
+                        <i class="bi bi-person-plus me-2"></i>Adicionar Usuário
+                    </button>
+                </div>
+                <div class="bg-white rounded-4 shadow-sm p-4 border border-light">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-mail Corporativo</th>
+                                    <th>Área/Departamento</th>
+                                    <th>Nível de Acesso</th>
+                                    <th class="text-end">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modais de Conteúdo e Avisos -->
+    <div class="modal fade" id="newCarouselModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header bg-light border-0">
+                    <h5 class="modal-title fw-bold">Adicionar Destaque</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formNewCarousel">
+                    <div class="modal-body p-4">
+                        <input type="url" class="form-control mb-3" id="bannerUrl" required placeholder="URL da Imagem">
+                        <input type="text" class="form-control mb-3" id="bannerTitle" required placeholder="Título">
+                        <input type="text" class="form-control mb-3" id="bannerSubtitle" required placeholder="Subtítulo">
+                        <input type="text" class="form-control" id="bannerBadge" value="Informativo">
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="submit" class="btn btn-matos rounded-pill px-4 w-100 fw-bold">Publicar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="newPostModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header bg-light border-0">
+                    <h5 class="modal-title fw-bold">Novo Informativo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formNewPost">
+                    <div class="modal-body p-4">
+                        <input type="text" class="form-control mb-3" id="postTitle" required placeholder="Título">
+                        <select class="form-select mb-3" id="postCategory" required>
+                            <option value="Avisos Gerais">Avisos Gerais</option>
+                            <option value="RH">RH</option>
+                            <option value="TI & Sistemas">TI & Sistemas</option>
+                        </select>
+                        <textarea class="form-control" id="postContent" rows="4" required placeholder="Conteúdo..."></textarea>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="submit" class="btn btn-matos rounded-pill px-4 w-100 fw-bold">Publicar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="notificationModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header bg-light border-0">
+                    <h5 class="modal-title fw-bold" id="notificationModalTitle">Nova Notificação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formNotification">
+                    <input type="hidden" id="notificationIndex" value="-1">
+                    <div class="modal-body p-4">
+                        <input type="text" class="form-control mb-3" id="notifTitle" required placeholder="Título">
+                        <input type="text" class="form-control mb-3" id="notifText" required placeholder="Mensagem">
+                        <select class="form-select" id="notifTheme" required>
+                            <option value="primary">Informativo</option>
+                            <option value="success">Sucesso</option>
+                            <option value="danger">Urgente</option>
+                            <option value="warning">Aviso</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="submit" class="btn btn-warning text-dark rounded-pill px-4 w-100 fw-bold">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modais de Gestão de Usuários -->
+    <div class="modal fade" id="newUserModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header bg-light border-0">
+                    <h5 class="modal-title fw-bold">Cadastrar Usuário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formNewUser">
+                    <div class="modal-body p-4">
+                        <input type="text" class="form-control mb-3" id="userName" required placeholder="Nome Completo">
+                        <input type="email" class="form-control mb-3" id="userEmail" required placeholder="E-mail Corporativo">
+                        
+                        <select class="form-select mb-3" id="userDepartment" required>
+                            <option value="" disabled selected>Selecione a Área (Grupo)</option>
+                            <option value="Dados & Performance">Dados & Performance</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Comercial">Comercial</option>
+                            <option value="TI">TI</option>
+                            <option value="Financeiro">Financeiro</option>
+                            <option value="Contabilidade">Contabilidade</option>
+                            <option value="Diretoria">Diretoria</option>
+                        </select>
+
+                        <select class="form-select mb-3" id="userRole" required>
+                            <option value="user">Usuário Padrão</option>
+                            <option value="admin">Administrador do Sistema</option>
+                        </select>
+
+                        <div class="mb-3 p-3 bg-light rounded border">
+                            <label class="form-label fw-bold small text-muted text-uppercase mb-2">Permissões Adicionais</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="userCanEditNews">
+                                <label class="form-check-label small" for="userCanEditNews">Pode gerenciar Notícias e Painel</label>
+                            </div>
+                            <div class="form-check mt-1">
+                                <input class="form-check-input" type="checkbox" id="userCanEditChat">
+                                <label class="form-check-label small" for="userCanEditChat">Pode gerenciar Grupos de Chat</label>
+                            </div>
+                        </div>
+
+                        <input type="password" class="form-control mb-3" id="userPassword" required placeholder="Senha de Acesso">
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="submit" class="btn btn-matos rounded-pill px-4 w-100 fw-bold">Criar Conta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editUserModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header bg-light border-0">
+                    <h5 class="modal-title fw-bold">Editar Usuário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formEditUser">
+                    <input type="hidden" id="editUserId">
+                    <div class="modal-body p-4">
+                        <input type="text" class="form-control mb-3" id="editUserName" required placeholder="Nome Completo">
+                        <input type="email" class="form-control mb-3" id="editUserEmail" required placeholder="E-mail Corporativo">
+                        
+                        <select class="form-select mb-3" id="editUserDepartment" required>
+                            <option value="" disabled>Selecione a Área (Grupo)</option>
+                            <option value="Dados & Performance">Dados & Performance</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Comercial">Comercial</option>
+                            <option value="TI">TI</option>
+                            <option value="Financeiro">Financeiro</option>
+                            <option value="Contabilidade">Contabilidade</option>
+                            <option value="Diretoria">Diretoria</option>
+                        </select>
+
+                        <select class="form-select mb-3" id="editUserRole" required>
+                            <option value="user">Usuário Padrão</option>
+                            <option value="admin">Administrador do Sistema</option>
+                        </select>
+
+                        <div class="mb-3 p-3 bg-light rounded border">
+                            <label class="form-label fw-bold small text-muted text-uppercase mb-2">Permissões Adicionais</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="editUserCanEditNews">
+                                <label class="form-check-label small" for="editUserCanEditNews">Pode gerenciar Notícias e Painel</label>
+                            </div>
+                            <div class="form-check mt-1">
+                                <input class="form-check-input" type="checkbox" id="editUserCanEditChat">
+                                <label class="form-check-label small" for="editUserCanEditChat">Pode gerenciar Grupos de Chat</label>
+                            </div>
+                        </div>
+
+                        <input type="text" class="form-control mb-3" id="editUserPassword" required placeholder="Senha de Acesso">
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="submit" class="btn btn-matos rounded-pill px-4 w-100 fw-bold">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modais do Chat (Novo Grupo, Editar Grupo e DM) -->
+    <div class="modal fade" id="newGroupModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header bg-light border-0">
+                    <h5 class="modal-title fw-bold">Criar Novo Canal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formNewGroup">
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted text-uppercase">Nome do Canal</label>
+                            <input type="text" class="form-control" id="groupName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted text-uppercase">Ícone Sugerido</label>
+                            <select class="form-select" id="groupIcon">
+                                <option value="bi-hash"># Geral</option>
+                                <option value="bi-megaphone">Campanhas</option>
+                                <option value="bi-cart">Vendas</option>
+                                <option value="bi-gear">Sistemas/TI</option>
+                                <option value="bi-heart">RH/Bem-estar</option>
+                                <option value="bi-briefcase">Projetos</option>
+                                <option value="bi-currency-dollar">Financeiro</option>
+                            </select>
+                        </div>
+                        <h6 class="fw-bold small text-muted mb-2 text-uppercase">Membros:</h6>
+                        <div id="groupUsersList" class="border rounded-3 p-3 bg-light overflow-auto" style="max-height: 180px;"></div>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="submit" class="btn btn-matos rounded-pill px-4 w-100 fw-bold">Criar Grupo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editGroupModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header bg-light border-0">
+                    <h5 class="modal-title fw-bold">Editar Canal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formEditGroup">
+                    <input type="hidden" id="editGroupId">
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted text-uppercase">Nome do Canal</label>
+                            <input type="text" class="form-control" id="editGroupName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted text-uppercase">Ícone</label>
+                            <select class="form-select" id="editGroupIcon">
+                                <option value="bi-hash"># Geral</option>
+                                <option value="bi-megaphone">Campanhas</option>
+                                <option value="bi-cart">Vendas</option>
+                                <option value="bi-gear">Sistemas/TI</option>
+                                <option value="bi-heart">RH/Bem-estar</option>
+                                <option value="bi-briefcase">Projetos</option>
+                                <option value="bi-currency-dollar">Financeiro</option>
+                            </select>
+                        </div>
+                        <h6 class="fw-bold small text-muted mb-2 text-uppercase">Membros:</h6>
+                        <div id="editGroupUsersList" class="border rounded-3 p-3 bg-light overflow-auto" style="max-height: 180px;"></div>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="submit" class="btn btn-matos rounded-pill px-4 w-100 fw-bold">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="newDirectModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header bg-light border-0">
+                    <h5 class="modal-title fw-bold">Nova Conversa Individual</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formNewDirect">
+                    <div class="modal-body p-4">
+                        <label class="form-label fw-bold small text-muted text-uppercase">Selecione a pessoa</label>
+                        <select class="form-select mb-3" id="directUserSelect" required></select>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="submit" class="btn btn-matos rounded-pill px-4 w-100 fw-bold">Iniciar Conversa</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de Notificação -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-4" style="z-index: 1100;">
+        <div id="liveToast" class="toast align-items-center text-bg-dark border-0 shadow-lg rounded-4" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="4000">
+            <div class="d-flex">
+                <div class="toast-body d-flex align-items-start gap-3">
+                    <i class="bi bi-chat-dots-fill text-matos fs-4"></i>
+                    <div>
+                        <strong class="d-block mb-1" id="toastTitle">Nova Mensagem</strong>
+                        <span id="toastMessageBody" class="small text-light" style="opacity: 0.9;">Carregando...</span>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/Home/dashboard.js"></script>
+</body>
+</html>
