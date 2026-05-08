@@ -1,0 +1,104 @@
+/* Configurações Gerais */
+body, html {
+    height: 100%;
+    background-color: #f0f2f5;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.login-container {
+    min-height: 100vh;
+}
+
+/* Card de Login */
+.card-custom {
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: none;
+    min-height: 550px;
+}
+
+/* Estilização do Gradiente (Cores do Logotipo) */
+.bg-gradient-matos {
+    background: linear-gradient(135deg, #713898 0%, #d63768 50%, #f1a95b 100%);
+    position: relative;
+}
+
+.brand-text {
+    letter-spacing: 4px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.small-text {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* Elementos do Formulário */
+.label-caps {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #6c757d;
+    letter-spacing: 1px;
+}
+
+.custom-input {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 0.65rem;
+}
+
+.custom-input:focus {
+    background-color: #fff;
+    border-color: #d63768;
+    box-shadow: 0 0 0 0.25rem rgba(214, 55, 104, 0.15);
+}
+
+.icon-box {
+    background-color: #f8f9fa;
+    color: #adb5bd;
+    border-right: none;
+}
+
+.toggle-btn {
+    border-color: #dee2e6;
+    color: #6c757d;
+    background-color: #f8f9fa;
+}
+
+/* Botões Customizados */
+.btn-matos {
+    background-color: #d63768;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-matos:hover {
+    background-color: #b52c56;
+    color: white;
+    transform: translateY(-2px);
+}
+
+#btnMicrosoftLogin {
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+#btnMicrosoftLogin:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+}
+
+.forgot-link {
+    color: #d63768;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.forgot-link:hover {
+    color: #713898;
+    text-decoration: underline;
+}
