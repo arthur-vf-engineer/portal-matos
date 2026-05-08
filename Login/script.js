@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     btnLogin.classList.replace('btn-matos', 'btn-success');
                     
                     setTimeout(() => {
-                        window.location.href = '/Home/dashboard.html';
+                        window.location.href = './Home/dashboard.html';
                     }, 500);
                 } else {
                     loginAlert.classList.remove('d-none');
